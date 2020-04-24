@@ -7,7 +7,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QCheckBox, QMessageBox, \
     QGridLayout
-from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QCoreApplication
 from datetime import datetime
 import os
@@ -20,16 +19,23 @@ class Screenshot(QWidget):
         # initializing widget layout
         super(Screenshot, self).__init__(parent)
         # initial list of checkbox titles
-        self.cb_list = ['Trip Information', 'Alarm Handler', 'First Fault', 'First Quadrant',
-                     'Storage Ring RF', 'B1400', 'XRMS_ID1', 'XRMS_ID2']
+        self.cb_list = ['Trip Information', 
+		        'Alarm Handler', 
+			'First Fault', 
+			'First Quadrant',
+                        'Storage Ring RF', 
+			'B1400', 
+			'XRMS_ID1', 
+			'XRMS_ID2']
+
         self.window_title = ['Trip Information Checklist',
-                'Control System Studio',
-                'Storage Ring Amplifier FFM',
-                'First Quadrant',
-                'RF OPI',
-                'B1400-00_monitor',
-                'XRMS_ID1',
-                'XRMS_ID2']
+                	     'Control System Studio',
+                	     'Storage Ring Amplifier FFM',
+                	     'First Quadrant',
+                	     'RF OPI',
+                	     'B1400-00_monitor',
+                	     'XRMS_ID1',
+                	     'XRMS_ID2']
 
         self.comb_win_title = list(map(list, zip(self.cb_list, self.window_title)))
 
@@ -55,7 +61,6 @@ class Screenshot(QWidget):
         # setting window properties
         self.setGeometry(300, 300, 300, 220)  # Window location 1, 2 window size 3, 4
         self.setWindowTitle('Screenshot')
-        self.setWindowIcon(QIcon('scrn.png'))
         self.show()
 
 
