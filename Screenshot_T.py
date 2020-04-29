@@ -118,6 +118,7 @@ class Screenshot(QWidget):
 
         # return to screenshot GUI
         os.system("wmctrl -a Screenshot")
+        self.error_msg.append('Screenshots have been saved, please press Clear Selected Screens and select again')
 
         # clear lists to not repeat information
         self.cb_list_comb.clear()
@@ -130,6 +131,7 @@ class Screenshot(QWidget):
         for i in self.cb_list:
             i.setChecked(False)
         self.error_msg.clear()
+        
     # Selects only screens used when storage ring trips
     def select_storage_ring_trip(self):
         for i in self.cb_list[0:5]:
