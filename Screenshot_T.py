@@ -67,7 +67,7 @@ class Screenshot(QWidget):
         self.setLayout(grid)
 
         # setting window properties
-        self.setGeometry(300, 300, 300, 220)  # Window location 1, 2 window size 3, 4
+        self.setGeometry(300, 300, 500, 220)  # Window location 1, 2 window size 3, 4
         self.setWindowTitle('Screenshot')
         self.show()
 
