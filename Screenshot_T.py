@@ -4,11 +4,13 @@
 # Travis' File
 
 
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QCheckBox, QMessageBox, \
-    QGridLayout
-from datetime import datetime
 import os
+import subprocess
+import sys
+from datetime import datetime
+
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QCheckBox, QMessageBox, \
+    QGridLayout, QTextBrowser
 
 
 class Screenshot(QWidget):
@@ -50,6 +52,8 @@ class Screenshot(QWidget):
             self.cb_list[i] = QCheckBox(v)
             self.cb_list[i].setChecked(False)
             grid.addWidget(self.cb_list[i], i, 0)
+        self.error_msg = QTextBrowser(self)
+        grid.addWidget(self.error_msg, 0, 1, 9, 1)
         # adding buttons to widget, saving screens and clearing selection
         self.sbtn = QPushButton('Save Selected Screenshots', self)
         self.sbtn.clicked.connect(self.save_screen)
@@ -95,15 +99,22 @@ class Screenshot(QWidget):
         now = datetime.now()
         date = now.strftime('%m-%d-%Y_%H-%M-%S')
 
+        cmd = "wmctrl -l | cut -d ' ' -f 5-"
+        output = subprocess.check_output(cmd, shell=True).decode("utf-8").split("\n")
+        # print(output)
         # iterating over scrn_list to find and capture selected screens based on title
         for i in self.scrn_list:
             for v in range(0, len(self.comb_win_title)):
                 if i in self.comb_win_title[v][0]:
-                    file = self.path + "{}_{}.png".format(date, i.replace(" ", ""))
-                    show_window = "wmctrl -a {}".format(self.comb_win_title[v][1].replace("'", ""))
-                    screen_shot = "gnome-screenshot -w -f {}".format(file)
-                    os.system(show_window)
-                    os.system(screen_shot)
+                    if any(self.comb_win_title[v][1] in z for z in output):
+                        file = self.path + "{}_{}.png".format(date, i.replace(" ", ""))
+                        show_window = "wmctrl -a {}".format(self.comb_win_title[v][1].replace("'", ""))
+                        screen_shot = "gnome-screenshot -w -f {}".format(file)
+                        os.system(show_window)
+                        os.system(screen_shot)
+                    else:
+                        msg = '{} is not open'.format(self.comb_win_title[v][0])
+                        self.error_msg.append(msg)
 
         # return to screenshot GUI
         os.system("wmctrl -a Screenshot")
@@ -118,7 +129,7 @@ class Screenshot(QWidget):
     def clear_screen(self):
         for i in self.cb_list:
             i.setChecked(False)
-
+        self.error_msg.clear()
     # Selects only screens used when storage ring trips
     def select_storage_ring_trip(self):
         for i in self.cb_list[0:5]:
