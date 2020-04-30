@@ -39,6 +39,17 @@ class Screenshot(QWidget):
                              'XRMS_ID1',
                              'XRMS_ID2']
 
+        # Use this window title list instead of the one above for the work computers
+
+        # self.window_title = ['Trip Information Checklist',
+        #                      'Control System Studio (CLS)',
+        #                      'Storage Ring Amplifier FFM',
+        #                      '/home/control/opi/Interface/SRInterface/BPMC.edl'
+        #                      'RF OPI',
+        #                      'B1400-00_monitor.stp Graph',
+        #                      'XRMS_ID1.stp Graph',
+        #                      'XRMS_ID2.stp Graph']
+
         self.comb_win_title = list(map(list, zip(self.cb_list, self.window_title)))
         self.cb_list_comb = []
         self.cb_list_bool = []
