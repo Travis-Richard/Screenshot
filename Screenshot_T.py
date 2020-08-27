@@ -114,6 +114,9 @@ class Screenshot(QWidget):
         output = subprocess.check_output(cmd, shell=True).decode("utf-8").split("\n")
         # print(output)
         # iterating over scrn_list to find and capture selected screens based on title
+        # print(self.scrn_list)
+        # print(self.comb_win_title)
+
         for i in self.scrn_list:
             for v in range(0, len(self.comb_win_title)):
                 if i in self.comb_win_title[v][0]:
